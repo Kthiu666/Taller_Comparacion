@@ -42,7 +42,7 @@ public class SortingDemo {
 
             // 3. Bubble Sort
             System.out.println("\n---- BubbleSort (Trazas) ----");
-            //BubbleSort.sort(arrBub, true);
+            BubbleSort.sort(arrBub, true);
             System.out.println("RESULTADO (Bubble): " + Arrays.toString(arrBub));
 
             System.out.println("---------------------------------");

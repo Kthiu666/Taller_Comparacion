@@ -57,6 +57,24 @@ Esta tabla compara el número de operaciones clave (swaps o desplazamientos) obs
 |    F    |        `[]`        |     Vacio     |       Vacio       |   Vacio    |
 |    G    |       `[7]`        |       0       |         0         |     0      |
 
+
+
+### Tabla de Recuento de Iteraciones (Pasadas)
+
+Esta tabla compara el **número de iteraciones del bucle principal** (pasadas) que realiza cada algoritmo.
+
+| Datasets | InsertionSort (Pasadas) | SelectionSort (Pasadas) | BubbleSort (Pasadas) |
+|:---------| :---: | :---: | :---: |
+| A        | 4 | 4 | 3 |
+| B        | 4 | 4 | 4 |
+| C        | 4 | 4 | 1 |
+| D        | 3 | 3 | 1 |
+| E        | 3 | 3 | 3 |
+| F        | 0 | 0 | 0 |
+| G        | 0 | 0 | 0 |
+
+
+
 ## 5. Comparación Cualitativa
 
 Esta tabla resume cuándo es preferible usar cada algoritmo, basado en sus características.

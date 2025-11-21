@@ -1,45 +1,32 @@
 package ed.u2.sorting;
-import java.util.Arrays;
 
 public class InsertionSort {
+    /*
+    Ordenar elementos y registrar comparaciones,
+    tiempo de ejecución y swaps
+    * */
 
-    // Metodo de ordenación (sin trazas)
-    public static void sort(int[] a) {
-        sort(a, false);
-    }
+    public static <T extends Comparable<T>> void sort(T[] a, SortMetrics m) {
+        //Iniciar cronómetro
+        long start = System.nanoTime();
+        int n = a.length;
 
-    // Sobrecarga para trazas
-    public static void sort(int[] a, boolean trace) {
-        if (a == null || a.length <= 1) {
-            if (trace) {
-                System.out.println("Arreglo es nulo o de tamaño 1. No se puede ordenar.");
-                System.out.println("  -> Estado: " + Arrays.toString(a));
-            }
-            return;
-        }
-        int desplazamientos = 0;
-        // Bucle externo desde i=1
-        for (int i = 1; i < a.length; i++) {
-            int key = a[i]; // Elemento a insertar
+        for (int i = 1; i < n; i++) {
+            //elemento a insertar en la posición correspondiente
+            T key = a[i];
+
             int j = i - 1;
 
-            // Mover elementos de a[0..i-1] que son mayores que key
-            // a una posición adelante de su posición actual
-            while (j >= 0 && a[j] > key) {
-                a[j + 1] = a[j];
-                j = j - 1;
-                desplazamientos++;
-            }
-            a[j + 1] = key;
-
-            // Trazas claras
-            if (trace) {
-                System.out.println("Iteración (i=" + i + "): Insertando " + key);
-                System.out.println("  -> Estado: " + Arrays.toString(a));
-            }
+            while (j >= 0){
+                m.comparisons++; //contar comparaciones
+                if (a[j].compareTo(key) > 0){
+                    a[j + 1] = a[j];
+                    m.swaps++;
+                    j--;
+                }else {break;}
+        }a[j + 1] = key;
         }
-        if (trace) {
-            //System.out.println(" Total desplazamientos (Inserción): " + desplazamientos);
-        }
+        //Registrar tiempo total
+        m.timeNs = System.nanoTime() - start;
     }
 }

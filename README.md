@@ -1,81 +1,73 @@
-# Taller 5: Informe de Métodos de Ordenación
+# Taller 6: Comparación de Algoritmos de Ordenación
 
-**Grupo:** V 
+**Grupo: V**
 
-**Asignatura:** Estructura de Datos
+**Universidad Nacional de Loja** 
 
-**Algoritmos:** InsertionSort, SelectionSort, BubbleSort
+**Carrera:** Computación
 
+**Asignatura:** Estructura de Datos 
 
-## 1. Decisiones de Implementación
+**Unidad:** 2 - Ordenación y Búsqueda
 
-El proyecto implementa los tres algoritmos de ordenación básica solicitados, dentro del paquete `ed.u2.sorting`.
+**Docente:** Ing. Andrés Roberto Navas Castellanos
 
-**Clases:** Se crearon las clases `InsertionSort`, `SelectionSort` y `BubbleSort`.
+---
 
-**Utilerías:** Se creó una clase `SortingUtils` que contiene un método estático `swap` para ser reutilizado por *SelectionSort* y *BubbleSort*.
+## Descripción y Objetivos
+Este proyecto implementa y analiza comparativamente tres algoritmos de ordenamiento básicos (**Burbuja, Selección e Inserción**)
 
-**Sobrecarga:** Todos los algoritmos implementan la firma `public static void sort(int[] a)` y la sobrecarga `public static void sort(int[] a, boolean trace)` para imprimir trazas.
+El objetivo principal es determinar experimentalmente cuándo conviene utilizar cada algoritmo en función de variables críticas como el tamaño del dataset ($n$), el grado de orden inicial y la presencia de duplicados
 
-**In-Place**: Todos los métodos `sort` modifican el arreglo original (in-place). Por ello, `SortingDemo` debe crear copias.
+##  Metodología y Diseño Experimental
+Siguiendo los lineamientos de la práctica, el sistema de medición implementa:
 
-* **Métricas:**
-    * **InsertionSort:** Cuenta los **desplazamientos** (shifts) de elementos.
-    * **SelectionSort:** Cuenta los **intercambios** (swaps).
-    * **BubbleSort:** Cuenta los **intercambios** e implementa la optimización de **corte temprano**.
+1.  **Instrumentación:**
+    * Contador de **Comparaciones** (`comparisons++`)
+    * Contador de **Intercambios** (`swaps++`)
+    * Medición de tiempo real con `System.nanoTime()`
 
-## 2. Casos Borde Probados
+2.  **Protocolo de Benchmark ("Warmup"):**
+    * Se ejecutan **13 repeticiones** por cada algoritmo y dataset.
+    * Se **descartan las 3 primeras** ejecuciones (calentamiento de la JVM/JIT) para evitar distorsiones
+    * Se reporta la **Mediana** de las 10 ejecuciones restantes para mayor precisión estadística
 
-La clase `SortingDemo` prueba los siguientes casos borde:
+3.  **Aislamiento de I/O:** La carga de datos (CSV) se realiza antes de iniciar el cronómetro para medir exclusivamente el rendimiento del algoritmo[cite: 39].
 
-* **Arreglo vacío:** `[]`
-* **Arreglo de tamaño 1:** `[7]`
-* **Arreglo casi ordenado:** `[9, 1, 8, 2]`
-* **Arreglo con duplicados:** `[2, 2, 2, 2]`
-* **Arreglo ya ordenado:** `[1, 2, 3, 4, 5]`
-* **Arreglo en orden inverso:** `[5, 4, 3, 2, 1]`
-* **Arreglo normal:** `[8, 3, 6, 3, 9]`
+##  Estructura del Proyecto
 
-## 3. Cómo Ejecutar las Pruebas
+* `src/ed/u2/sorting/`
+    * `Benchmark.java`: Clase principal que orquesta las pruebas y calcula las medianas.
+    * `DatasetGenerador.java`: Crea los archivos `.csv` con semilla fija (42) para reproducibilidad.
+    * `SortMetrics.java`: Clase contenedora para las métricas (tiempo, swaps, comparaciones).
+    * ´BubbleSort.java`: Implementación con optimización de "corte temprano" (`swapped` flag)
+    * `SelectionSort.java`: Implementación estándar minimizando swaps.
+    * `InsertionSort.java`: Optimizado para inserción in-place.
 
-1.  Asegurarse de que los 5 archivos `.java` estén en la carpeta `src/ed/u2/sorting/`.
-2.  Compilar el proyecto.
-3.  Ejecutar la clase `ed.u2.sorting.SortingDemo`.
-4.  La consola imprimirá las trazas completas de los tres algoritmos para todos los datasets. Las trazas generadas son las evidencias solicitadas.
+##  Casos de Prueba (Datasets)
+Se generan 4 escenarios específicos definidos en la guía[cite: 42, 45]:
 
-## 4. Tabla de Recuento de Operaciones
+1.  **Aleatorio (`citas_100.csv`):** Fechas y horas dispersas ($n=100$).
+2.  **Casi Ordenado (`citas...casi_ordenadas.csv`):** Datos ordenados con un 5% de perturbación ($n=100$).
+3.  **Muchos Duplicados (`pacientes_500.csv`):** Apellidos repetidos frecuentemente ($n=500$).
+4.  **Orden Inverso (`inventario_500_inverso.csv`):** Stock descendente estricto ($n=500$).
 
-Esta tabla compara el número de operaciones clave (swaps o desplazamientos) observadas para cada algoritmo.
-
-| Dataset |  Arreglo Original  | InsertionSort |   SelectionSort   | BubbleSort |
-|:-------:|:------------------:|:-------------:|:-----------------:|:----------:|
-|    A    | `[8, 3, 6, 3, 9]`  |       4       |         2         |     4      |
-|    B    | `[5, 4, 3, 2, 1]`  |      10       |         2         |     10     |
-|    C    | `[1, 2, 3, 4, 5]`  |       0       |         0         |     0      |
-|    D    |   `[2, 2, 2, 2]`   |       0       |         0         |     0      |
-|    E    |   `[9, 1, 8, 2]`   |       4       |         2         |     4      |
-|    F    |        `[]`        |     Vacio     |       Vacio       |   Vacio    |
-|    G    |       `[7]`        |       0       |         0         |     0      |
+### Tabla o Matriz de Recomendaciones
 
 
-
-### Tabla de Recuento de Iteraciones (Pasadas)
-
-Esta tabla compara el **número de iteraciones del bucle principal** (pasadas) que realiza cada algoritmo.
-
-| Datasets | InsertionSort (Pasadas) | SelectionSort (Pasadas) | BubbleSort (Pasadas) |
-|:---------|:-----------------------:|:-----------------------:|:--------------------:|
-| A        |            4            |            4            |          3           |
-| B        |            4            |            4            |          4           |
-| C        |            4            |            4            |          1           |
-| D        |            3            |            3            |          1           |
-| E        |            3            |            3            |          3           |
-| F        |            0            |            0            |          0           |
-| G        |            0            |            0            |          0           |
+| Escenario                | InsertionSort (Pasadas) | SelectionSort (Pasadas) | BubbleSort (Pasadas) |
+|:-------------------------|:-----------------------:|:-----------------------:|:--------------------:|
+| Casi ordenado<br/> n<500 |                         |                         |                      |
+| Muchos duplicados        |                         |                         |                      |
+| Orden inverso            |                         |                         |                      |
+| Aleatorio peq/ med       |                         |                         |                      |
+| Minimizar swaps          |                         |                         |                      |
+|                          |                         |                         |                      |
+|                          |                         |                         |                      |
 
 
 
-## 5. Comparación Cualitativa
+## 5. Comparación
 
 Esta tabla resume cuándo es preferible usar cada algoritmo, basado en sus características.
 
@@ -83,4 +75,4 @@ Esta tabla resume cuándo es preferible usar cada algoritmo, basado en sus carac
 |:--------------:|:---------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------:|
 | **Inserción**  |                  Datos casi ordenados o con datos en tiempo real                  | Es el más eficaz en datos pequeños y  si el arreglo está casi ordenado porque realiza menos comparaciones . |
 | **Selección**  |      Para minimizar escritura en memoria ya que realiza menos intercambios.       |   Es el más eficiente en intercambios por que realiza el mínimo número de intercambios de datos posible.    |
-|  **Burbuja**   | **Datos pequeños** o para **detectar si un arreglo ya está ordenado** muy rápido. |               Su eficiencia en memoria ya que ordena, los elementos dentro del mismo arreglo.               |
+|  **Burbuja**   | **Datos pequeños** o para **detectar si un arreglo ya está ordenado** muy rápido. |               Su eficiencia en memoria ya que ordena, los elementos dentro del mismo arreglo. 

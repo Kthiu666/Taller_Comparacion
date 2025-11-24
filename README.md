@@ -55,15 +55,15 @@ Se generan 4 escenarios específicos definidos en la guía[cite: 42, 45]:
 ### Tabla o Matriz de Recomendaciones
 
 
-| Escenario                | InsertionSort (Pasadas) | SelectionSort (Pasadas) | BubbleSort (Pasadas) |
-|:-------------------------|:-----------------------:|:-----------------------:|:--------------------:|
-| Casi ordenado<br/> n<500 |                         |                         |                      |
-| Muchos duplicados        |                         |                         |                      |
-| Orden inverso            |                         |                         |                      |
-| Aleatorio peq/ med       |                         |                         |                      |
-| Minimizar swaps          |                         |                         |                      |
-|                          |                         |                         |                      |
-|                          |                         |                         |                      |
+| Escenario                |                         InsertionSort (Pasadas)                        |                          SelectionSort (Pasadas)                          | BubbleSort (Pasadas) |
+|:-------------------------|:----------------------------------------------------------------------:|:-------------------------------------------------------------------------:|:--------------------:|
+| Casi ordenado<br/> n<500 |      Se recomienda insertionSort por que realiza menos movimientos     |                                                                           |                      |
+| Muchos duplicados        | Aqui tambien se recomienda InsertionSort por que es estable y eficiente |                                                                           |                      |
+| Orden inverso            |                                                                        | Se recomienda SelectionSort porque el comportamiento de este es constante |                      |
+| Aleatorio peq/ med       |                                                                        |                                                                           | Se recomienda BubbleSort porque ofrece mejor optimizacion al momento de ordenar                     |
+| Minimizar swaps          |                                                                        |      Se recomienda SelectionSort porque el maximo de swaps es de n-1      |                      |
+|                          |                                                                        |                                                                           |                      |
+|                          |                                                                        |                                                                           |                      |
 
 
 

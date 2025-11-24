@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class DatasetGenerador {
 
-    // Semilla fija para reproducibilidad (Regla de oro del taller)
+    // Semilla fija para reproducibilidad
     private static final long SEED = 42;
     private static final Random random = new Random(SEED);
 

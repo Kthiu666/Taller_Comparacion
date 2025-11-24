@@ -26,7 +26,7 @@ public class Benchmark {
             runBenchmark(inventario, "inventario_500_inverso.csv", "n=500, orden inverso");
 
         } catch (IOException e) {
-            System.err.println("❌ Error cargando datasets: " + e.getMessage());
+            System.err.println(" Error cargando datasets: " + e.getMessage());
         }
     }
 
